@@ -26,6 +26,5 @@ test('returns an Object', async () => {
 test('response contains a result array', async () => {
   mockFakeApi();
   const resultData: MutatedData = await fetchResults();
-  console.log("🚀 ~ test ~ resultData:", resultData)
   expect(Array.isArray(resultData.results)).toBe(true);
 });

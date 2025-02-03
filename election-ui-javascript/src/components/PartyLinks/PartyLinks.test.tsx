@@ -4,8 +4,8 @@ import PartyLinks from '.';
 test('renders party links as a list', async () => {
   render(<PartyLinks/>);
 
-  const partyLinks = screen.getAllByTestId('party-links')
-  expect(partyLinks).toHaveRole('ul');
+  const partyLinks = screen.getByTestId('party-links')
+  expect(partyLinks).toHaveRole('list');
 });
 
 test('renders all the party links', async () => {
@@ -18,7 +18,7 @@ test('renders all the party links', async () => {
 test('renders a party link with the correct text and href', async () => {
   render(<PartyLinks/>);
 
-  const partyLinksAnchorTag = screen.getByRole('a')
-  expect(partyLinksAnchorTag.textContent).toBe('Hippo Party');
-  expect(partyLinksAnchorTag).toHaveAttribute('href', 'https://en.wikipedia.org/wiki/Hippopotamus');
+  const partyLinksAnchorTag = await screen.findAllByRole('a')
+  expect(partyLinksAnchorTag[0].textContent).toBe('Hippo Party');
+  expect(partyLinksAnchorTag[0]).toHaveAttribute('href', 'https://en.wikipedia.org/wiki/Hippopotamus');
 });
