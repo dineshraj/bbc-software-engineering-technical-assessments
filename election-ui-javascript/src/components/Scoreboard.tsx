@@ -4,11 +4,12 @@ import fetchData from '../dataFetcher';
 import Scorecard from './Scorecard';
 import './Scoreboard.css';
 import PartyLinks from "./PartyLinks";
+import { Item } from '../types';
 
 function Scoreboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [results, setResults] = useState([]);
+  const [results, setResults] = useState<Item[]>([]);
 
   async function getData() {
     try {

@@ -1,6 +1,12 @@
 import React from 'react';
+import { SvgProps } from '../../types';
 
-const createLogo = ({ LogoGraphicalDefs, LogoGraphicalPaths }) => ({ svgProps }) => (
+interface CreateLogoProps {
+  LogoGraphicalDefs: React.FC;
+  LogoGraphicalPaths: React.FC
+}
+
+const createLogo = ({ LogoGraphicalDefs, LogoGraphicalPaths }: CreateLogoProps) => ({ svgProps } : { svgProps: SvgProps }) => (
   <svg viewBox="0 0 971.11 172.53" {...svgProps} data-testid="test-election-logo-en">
     <LogoGraphicalDefs />
     <g style={{ isolation: 'isolate' }}>

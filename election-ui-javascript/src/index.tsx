@@ -4,7 +4,7 @@ import "./index.css";
 import Scoreboard from "./components/Scoreboard";
 
 const root = ReactDOMClient.createRoot(
-  document.getElementById("root")
+  document.getElementById("root") as HTMLElement
 );
 
 root.render(

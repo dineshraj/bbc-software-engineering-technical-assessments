@@ -5,26 +5,24 @@ import createLogoCy from './create-logo-cy';
 import createLogoEn from './create-logo-en';
 
 const svgProps = {
-  'aria-hidden': 'true',
+  'aria-hidden': true,
   display: 'block',
-  focusable: 'false',
+  focusable: true,
   height: '2em',
   preserveAspectRatio: 'xMinYMid meet'
 };
 
-const getLogo = language => {
+const getLogo = (language: string) => {
   const createLogo = language === 'cy' ? createLogoCy : createLogoEn;
 
   return createLogo({ LogoGraphicalDefs, LogoGraphicalPaths });
 };
 
-const Logo = ({ language }) => {
+const Logo = ({ language } : {language: string}) => {
   const LogoForLanguage = getLogo(language);
 
   return (
-    <>
-      <LogoForLanguage svgProps={svgProps} />
-    </>
+    <LogoForLanguage svgProps={svgProps} />
   );
 };
 

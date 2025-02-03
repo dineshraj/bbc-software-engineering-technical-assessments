@@ -1,6 +1,7 @@
+import { Item } from '../../types';
 import './Scorecard.css';
 
-function Scorecard({ results }) {
+function Scorecard({ results }: { results: Item[] }) {
   if (!results || results.length === 0) {
     return <div>No results</div>;
   }
