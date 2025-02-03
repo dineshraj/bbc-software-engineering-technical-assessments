@@ -18,7 +18,7 @@ test('renders all the party links', async () => {
 test('renders a party link with the correct text and href', async () => {
   render(<PartyLinks/>);
 
-  const partyLinksAnchorTag = await screen.findAllByRole('a')
+  const partyLinksAnchorTag = await screen.findAllByTestId('party-link');
   expect(partyLinksAnchorTag[0].textContent).toBe('Hippo Party');
   expect(partyLinksAnchorTag[0]).toHaveAttribute('href', 'https://en.wikipedia.org/wiki/Hippopotamus');
 });

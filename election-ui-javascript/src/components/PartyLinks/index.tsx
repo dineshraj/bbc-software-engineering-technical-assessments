@@ -13,8 +13,8 @@ function PartyLinks() {
   return (
     <ul className="Party-links" data-testid="party-links">
       {PARTIES.map((party) =>
-        (<li className="Party-link" data-testid="party-link" key={party.name}>
-          <a href={party.url}>{party.name}</a>
+        (<li className="Party-link" key={party.name}>
+          <a data-testid="party-link" href={party.url}>{party.name}</a>
         </li>)
       )}
     </ul>
