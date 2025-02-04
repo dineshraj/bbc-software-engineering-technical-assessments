@@ -35,12 +35,6 @@ function Scorecard({ results, candidateData, isComplete }: ScorecardProps) {
       </tr>
     )
   }
-
-  if (isComplete) {
-    console.log(scores);
-    
-  
-  }
   
   return (
     <div className="Scorecard">

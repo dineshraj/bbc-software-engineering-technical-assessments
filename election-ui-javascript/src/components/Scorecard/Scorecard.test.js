@@ -6,7 +6,12 @@ const results = [
     'party': 'Green',
     'candidateId': 2,
     'votes': '1056'
-  }
+  },
+  {
+    'party': 'Tiger P',
+    'candidateId': 3,
+    'votes': '1057'
+  },
 ];
 
 const candidateData = [
@@ -14,6 +19,10 @@ const candidateData = [
     id: 2,
     name: 'Baldrick'
   },
+  {
+    id: 3,
+    name: 'Blackadder'
+  }
 ];
 
 test('renders results', async () => {
@@ -46,8 +55,9 @@ test('renders No Results if there are no results', async () => {
   expect(noResultsMessage).toBeInTheDocument();
 });
 
-test('Sets the background of the winner to yellow when voting is complete', async () => {
-  render(<Scorecard results={results} candidateData={candidateData} votingComplete={true} />);
-  const party = screen.getByText(/Green/i);
-  expect(party).toHaveStyle('background-color: yellow');
+test('Sets the background of the winner', async () => {
+  render(<Scorecard results={results} candidateData={candidateData} isComplete={true} />);
+  const party = screen.getByText('Tiger P');
+  // eslint-disable-next-line testing-library/no-node-access
+  expect(party.parentElement).toHaveStyle('background-color: lightgreen');
 });
