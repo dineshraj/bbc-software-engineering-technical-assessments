@@ -2,7 +2,7 @@
 // This file returns static data in a crude attempt to mock an external API for the purpose of the test
 // You may want to use it as a reference, but you do not need to make any changes to this file.
 
-import { DefaultData, Item, MetaData, MutatedData } from "../types";
+import { CandidateData, DefaultData, Item, MetaData, MutatedData } from "../types";
 
 const candidateData = [
   {
@@ -21,7 +21,7 @@ const candidateData = [
 
 const defaultData: DefaultData = {
   metadata: {
-    isComplete: false
+    isComplete: true
   },
   results: [
     {
@@ -69,7 +69,11 @@ const fetchResultData = () => {
   }) as Promise<MutatedData>;
 };
 
-const fetchCandidateData = () => candidateData;
+const fetchCandidateData = () => {
+  return new Promise((resolve, _reject) => {
+    resolve(candidateData);
+  }) as Promise<CandidateData[]>;
+};
 
 export { fetchResultData, fetchCandidateData };
 

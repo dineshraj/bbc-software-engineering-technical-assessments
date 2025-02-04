@@ -26,3 +26,8 @@ export interface MutatedData {
   isComplete: boolean;
   results: Item[];
 }
+
+export interface CandidateData {
+  id: number;
+  name: string;
+}

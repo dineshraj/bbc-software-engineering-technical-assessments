@@ -1,3 +1,27 @@
 .Party-links {
-  color: red;
+  color: rgb(0, 0, 255);
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  padding: 0; 
+}
+
+.Party-links li {
+  list-style-type: none;
+  margin: 10px;
+  border: 2px solid #bb1919;
+  transition: all .1s ease-in-out; 
+  
+}
+
+.Party-links li a {
+  display: block;
+  color: rgb(0, 0, 0);
+  font-size: 14px; 
+  padding: 10px;
+}
+
+.Party-links li:hover,
+.Party-links li:focus,
+.Party-links li:active {
+  transform: scale(1.1);
 }

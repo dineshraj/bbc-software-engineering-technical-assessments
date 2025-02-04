@@ -7,22 +7,29 @@ import {
 } from '@testing-library/react';
 import Scoreboard from './Scoreboard';
 import dataFetcher from '../dataFetcher/';
-import { MutatedData } from '../types';
 
 jest.mock('../dataFetcher');
 
 test('renders Results', async () => {
   (dataFetcher as jest.Mock).mockImplementationOnce(() => {
     return Promise.resolve({
-      isComplete: false,
-      results: [
+      results: {
+        isComplete: false,
+        results: [
+          {
+            party: 'Giraffe Party',
+            candidateId: 2,
+            votes: '9900'
+          }
+        ]
+      },
+      candidateData: [
         {
-          party: 'Giraffe Party',
-          candidateId: 2,
-          votes: '9900'
+          id: 2,
+          name: 'Lord Buckethead'
         }
       ]
-    }) as Promise<MutatedData>;
+    });
   });
 
   render(<Scoreboard />);
@@ -48,28 +55,23 @@ test('renders error state', async () => {
   });
 });
 
-test('fetches results again when refresh button clicked', async () => {
+test('displays the voting complete message when all votes are in', async () => {
   (dataFetcher as jest.Mock).mockImplementationOnce(() => {
     return Promise.resolve({
-      isComplete: false,
-      results: [
+      results: {
+        isComplete: true,
+        results: [
+          {
+            party: 'Giraffe Party',
+            candidateId: 2,
+            votes: '9900'
+          }
+        ]
+      },
+      candidateData: [
         {
-          party: 'Giraffe Party',
-          candidateId: 2,
-          votes: '9900'
-        }
-      ]
-    });
-  });
-
-  (dataFetcher as jest.Mock).mockImplementationOnce(() => {
-    return Promise.resolve({
-      isComplete: false,
-      results: [
-        {
-          party: 'Giraffe Party',
-          candidateId: 2,
-          votes: '12345'
+          id: 2,
+          name: 'Lord Buckethead'
         }
       ]
     });
@@ -77,7 +79,56 @@ test('fetches results again when refresh button clicked', async () => {
 
   render(<Scoreboard />);
 
-  expect(dataFetcher).toBeCalledTimes(1);
+  await waitFor(() => {
+    const votingCompleteMessage = screen.getByText(/Voting Complete/i);
+    expect(votingCompleteMessage).toBeInTheDocument();
+  });
+});
+
+test('fetches results again when refresh button clicked', async () => {
+  (dataFetcher as jest.Mock).mockImplementationOnce(() => {
+    return Promise.resolve(
+      {
+        results: {
+          isComplete: false,
+          results: [
+            {
+              party: 'Giraffe Party',
+              candidateId: 2,
+              votes: '9900'
+            }
+          ]
+        },
+        candidateData: [{
+          id: 2,
+          name: 'Lord Buckethead'
+        }]
+    });
+  });
+
+  (dataFetcher as jest.Mock).mockImplementationOnce(() => {
+    return Promise.resolve(
+      {
+        results: {
+          isComplete: false,
+          results: [
+            {
+              party: 'Giraffe Party',
+              candidateId: 2,
+              votes: '12345'
+            }
+          ]
+        },
+        candidateData: [{
+          id: 2,
+          name: 'Lord Buckethead'
+        }]
+    });
+  });
+
+  render(<Scoreboard />);
+
+  expect(dataFetcher).toHaveBeenCalledTimes(1);
   await waitFor(() => {
     const votes = screen.getByText(/9900/i);
     expect(votes).toBeInTheDocument();
@@ -86,7 +137,7 @@ test('fetches results again when refresh button clicked', async () => {
   const refreshButton = screen.getByText(/Refresh/i);
   fireEvent.click(refreshButton);
 
-  expect(dataFetcher).toBeCalledTimes(2);
+  expect(dataFetcher).toHaveBeenCalledTimes(2);
   await waitFor(() => {
     const votesAfterRefresh = screen.getByText(/12345/i);
     expect(votesAfterRefresh).toBeInTheDocument();

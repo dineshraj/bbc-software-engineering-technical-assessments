@@ -25,6 +25,7 @@ main {
 }
 
 .Scoreboard-refresh {
+  background-color: white;
   padding: 1rem;
   border: 3px solid #bb1919;
   margin-top: 1rem;
@@ -36,4 +37,13 @@ main {
 .Scoreboard-refresh:hover {
   background-color: #bb1919;
   color: white;
+}
+
+.completed {
+  font-size: 14px;
+  background-color: #bb1919;
+  color: white;
+  padding: 10px;
+  /* border-radius: 0.5rem; */
+  /* margin-top: 0; */
 }

@@ -4,18 +4,20 @@ import fetchData from '../dataFetcher';
 import Scorecard from './Scorecard';
 import './Scoreboard.css';
 import PartyLinks from "./PartyLinks";
-import { Item } from '../types';
+import { CandidateData, Item, MutatedData } from '../types';
 
 function Scoreboard() {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState(false);
-  const [results, setResults] = useState<Item[]>([]);
+  const [results, setResults] = useState<MutatedData>({ results: [], isComplete: false });
+  const [candidateData, setCandidateData] = useState<CandidateData[]>([]);
 
   async function getData() {
     try {
       setLoading(true);
-      const resultData = await fetchData();
-      setResults(resultData.results);
+      const { results, candidateData } = await fetchData();
+      setResults(results);
+      setCandidateData(candidateData);
       setLoading(false);
     } catch (e) {
       setLoading(false);
@@ -36,10 +38,11 @@ function Scoreboard() {
         {
           loading ? <h2>Loading...</h2> :
           error ? <h1>Error</h1> :
-          <>
-            <h1>Results</h1>
-            <Scorecard results={results} />
-            <a className="Scoreboard-refresh">Refresh</a>
+              <>
+                {results.isComplete && <p className='completed'>VOTING COMPLETE</p>}
+                <h1>Results</h1>
+                <Scorecard results={results.results} isComplete={results.isComplete} candidateData={candidateData} />
+                <button onClick={getData} className="Scoreboard-refresh">Refresh</button>
             <h1>Learn more about the parties...</h1>
             <PartyLinks />
           </>
